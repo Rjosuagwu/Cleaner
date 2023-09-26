@@ -47,7 +47,7 @@ A short paragraph explaining what your project is about. What problem does it so
 Processing IDE: Users need to have the Processing IDE installed on their local machine. It can be downloaded from processing.org.
 
 ## Usage
-Show examples of how to use your project once it's up and running. Include code snippets, screenshots, or even GIFs if relevant.
+![image](Usage.png)
 
 ## Technologies Used
 Processing: The project is primarily built using the Processing programming language and its integrated development environment (IDE).
