@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Portfolio</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    </head>
+    <body>
+
+        <script>
+
+let a = 5; // will help load each of the images into the program
+
+// variables to tell the user the amount of litter collected
+let k = 0;
+let l = 0;
+let m = 0;
+let q = 0;
+
+// variable to change from a scene to a fact
+let v = 0;
+
+let images = new Array(6); // will store each of the background scenes
+let img = new Array(6); // will store the images of the facts on a sustainable environment
+
+// these lines of code are variables that will store the litter that will be visible within the scene
+// and will allow me to call back on them when I need the litter to appear
+let rubbish;
+let paper;
+let plasticbag;
+
+// variable to store the x coordinate of each randomized piece of litter
+// these are in arrays to minimize the use of many singular variables preventing the reuse of letters
+// I concluded that this would be the best decision as I noticed the many repeats of code within my program
+// and deemed it simply impossible to use singular variables
+let c = new Array(5);
+let d = new Array(5);
+let e = new Array(5);
+let f = new Array(5);
+let p = new Array(5);
+
+// variables for the y coordinate position of the litter each variable being used within a different scene
+let g = new Array(5);
+let h = new Array(5);
+let n = new Array(5);
+let j = new Array(5);
+let o = new Array(5);
+
+// will apply the background of the starting scene and will then increase
+let b = 1;
+
+function setup() {
+  //createCanvas(930, 610);
+  createCanvas(windowWidth, windowHeight);
+  imageMode(CENTER);
+  // a loop to efficiently load all necessary images into the program
+  for (let i = 1; i <= a; i++) {
+    images[i] = loadImage("img" + i + ".jpeg");
+    img[i] = loadImage("images" + i + ".jpeg");
+    rubbish = loadImage("rubbish.png");
+    paper = loadImage("ballsmaller.png");
+    plasticbag = loadImage("plasticbag.png");
+  }
+
+  // array variables for the x coordinate position of the litter (randomized)
+  for (let i = 0; i <= 4; i++) {
+    c[i] = int(random(30, 1300));
+  }
+  for (let i = 0; i <= 4; i++) {
+    d[i] = int(random(30, 1300));
+  }
+  for (let i = 0; i <= 4; i++) {
+    e[i] = int(random(30, 1300));
+  }
+  for (let i = 0; i <= 4; i++) {
+    f[i] = int(random(30, 1300));
+  }
+  for (let i = 0; i <= 4; i++) {
+    p[i] = int(random(30, 1300));
+  }
+
+  // variables for the y coordinate position of the litter(randomized)
+  for (let i = 0; i <= 4; i++) {
+    g[i] = int(random(600, 750));
+  }
+  for (let i = 0; i <= 4; i++) {
+    h[i] = int(random(600, 750));
+  }
+  for (let i = 0; i <= 4; i++) {
+    n[i] = int(random(200, 535));
+  }
+  for (let i = 0; i <= 4; i++) {
+    j[i] = int(random(600, 750));
+  }
+  for (let i = 0; i <= 4; i++) {
+    o[i] = int(random(600, 750));
+  }
+}
+
+function draw() {
+  if (b == 1) {
+    image(images[b], width / 2, height / 2, width, height); // apply first scene
+    textSize(35);
+    fill(255, 0, 0);
+    text("Rubbish to find: 4", 50, 40); // prompts the user with a goal to achieve
+
+    image(rubbish, c[0]+ rubbish.width/2, g[0] + rubbish.height/2); // randomly scatters the litter over a certain area
+    image(rubbish, c[1]+ rubbish.width/2, g[1]+ rubbish.height/2);
+    image(rubbish, c[2]+ rubbish.width/2, g[2]+ rubbish.height/2);
+    image(rubbish, c[3]+ rubbish.width/2, g[3]+ rubbish.height/2);
+
+    // the following piece of code was inspired by the use of the 'mouse X' within Lab 2
+    // in which we made the bat and ball game
+    if (mouseIsPressed) {
+      if (
+        mouseX > c[0] &&
+        mouseX < c[0] + 70 &&
+        mouseY > g[0] &&
+        mouseY < g[0] + 110
+      ) {
+        k = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > c[1] &&
+        mouseX < c[1] + 70 &&
+        mouseY > g[1] &&
+        mouseY < g[1] + 110
+      ) {
+        l = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > c[2] &&
+        mouseX < c[2] + 70 &&
+        mouseY > g[2] &&
+        mouseY < g[2] + 110
+      ) {
+        m = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > c[3] &&
+        mouseX < c[3] + 70 &&
+        mouseY > g[3] &&
+        mouseY < g[3] + 110
+      ) {
+        q = 3;
+      }
+    }
+
+    // states that the litter has been found
+    if (k > 0) {
+      textSize(20);
+      fill(255, 0, 0);
+      text("Rubbish found", 750, 40);
+    }
+    if (l > 0) {
+      textSize(20);
+      text("Rubbish found", 750, 70);
+    }
+    if (m > 0) {
+      textSize(20);
+      text("Rubbish found", 750, 100);
+    }
+    if (q > 0) {
+      textSize(20);
+      text("Rubbish found", 750, 130);
+    }
+
+    // resets all the variables to apply the same method to the next scene
+    if (k > 0 && l > 0 && m > 0 && q > 0) {
+      v = 3;
+      k = 0;
+      l = 0;
+      m = 0;
+      q = 0;
+      b = -2;
+    }
+  }
+
+  // prompts the user with a fact and allows them to continue when ready
+  if (v == 3) {
+    image(img[1], width / 2, height / 2, width, height);
+    textSize(35);
+    fill(0, 0, 0);
+    text("Press Any Key To Continue", 500, 600);
+
+    if (keyIsPressed) {
+      b
+      b = 2;
+      v = 0;
+      image(images[b], width / 2, height / 2, width, height);
+    }
+  }
+
+  // the program repeats for all 5 scenes
+  if (b == 2) {
+    textSize(35);
+    fill(255, 0, 0);
+    text("Paper to find: 4", 40, 40);
+
+    image(paper, d[0]+paper.width/2, h[0]+paper.width/2);
+    image(paper, d[1]+paper.width/2, h[1]+paper.width/2);
+    image(paper, d[2]+paper.width/2, h[2]+paper.width/2);
+    image(paper, d[3]+paper.width/2, h[3]+paper.width/2);
+
+    if (mouseIsPressed) {
+      if (
+        mouseX > d[0] &&
+        mouseX < d[0] + 30 &&
+        mouseY > h[0] &&
+        mouseY < h[0] + 37
+      ) {
+        k = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > d[1] &&
+        mouseX < d[1] + 30 &&
+        mouseY > h[1] &&
+        mouseY < h[1] + 37
+      ) {
+        l = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > d[2] &&
+        mouseX < d[2] + 30 &&
+        mouseY > h[2] &&
+        mouseY < h[2] + 37
+      ) {
+        m = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > d[3] &&
+        mouseX < d[3] + 30 &&
+        mouseY > h[3] &&
+        mouseY < h[3] + 37
+      ) {
+        q = 3;
+      }
+    }
+
+    if (k > 0) {
+      textSize(20);
+      fill(255, 0, 0);
+      text("Paper found", 750, 40);
+    }
+    if (l > 0) {
+      textSize(20);
+      text("Paper found", 750, 70);
+    }
+    if (m > 0) {
+      textSize(20);
+      text("Paper found", 750, 100);
+    }
+    if (q > 0) {
+      textSize(20);
+      text("Paper found", 750, 130);
+    }
+    if (k > 0 && l > 0 && m > 0 && q > 0) {
+      v = 4;
+      b = -2;
+      k = 0;
+      l = 0;
+      m = 0;
+      q = 0;
+    }
+  }
+
+  if (v == 4) {
+    image(img[2], width / 2, height / 2, width, height);
+    textSize(35);
+    fill(0, 0, 0);
+    text("Press Any Key To Continue", 500, 600);
+
+    if (keyIsPressed) {
+      b = 3;
+      v = 0;
+      image(images[b], width / 2, height / 2, width, height);
+    }
+  }
+
+  if (b == 3) {
+    textSize(35);
+    fill(0, 0, 255);
+    text("Plastic bags to find: 4", 40, 40);
+
+    image(plasticbag, e[0]+plasticbag.width/2, n[0]+plasticbag.height/2);
+    image(plasticbag, e[1]+plasticbag.width/2, n[1]+plasticbag.height/2);
+    image(plasticbag, e[2]+plasticbag.width/2, n[2]+plasticbag.height/2);
+    image(plasticbag, e[3]+plasticbag.width/2, n[3]+plasticbag.height/2);
+
+    if (mouseIsPressed) {
+      if (
+        mouseX > e[0] &&
+        mouseX < e[0] + 40 &&
+        mouseY > n[0] &&
+        mouseY < n[0] + 47
+      ) {
+        k = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > e[1] &&
+        mouseX < e[1] + 40 &&
+        mouseY > n[1] &&
+        mouseY < n[1] + 47
+      ) {
+        l = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > e[2] &&
+        mouseX < e[2] + 40 &&
+        mouseY > n[2] &&
+        mouseY < n[2] + 47
+      ) {
+        m = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > e[3] &&
+        mouseX < e[3] + 40 &&
+        mouseY > n[3] &&
+        mouseY < n[3] + 47
+      ) {
+        q = 3;
+      }
+    }
+
+    if (k > 0) {
+      textSize(20);
+      fill(0, 0, 255);
+      text("Plastic bag found", 750, 40);
+    }
+    if (l > 0) {
+      textSize(20);
+      text("Plastic bag found", 750, 70);
+    }
+    if (m > 0) {
+      textSize(20);
+      text("Plastic bag found", 750, 100);
+    }
+    if (q > 0) {
+      textSize(20);
+      text("Plastic bag found", 750, 130);
+    }
+    if (k > 0 && l > 0 && m > 0 && q > 0) {
+      v = 5;
+      b = -2;
+      k = 0;
+      l = 0;
+      m = 0;
+      q = 0;
+    }
+  }
+
+  if (v == 5) {
+    image(img[3], width / 2, height / 2, width, height);
+    textSize(35);
+    fill(0, 0, 0);
+    text("Press Any Key To Continue", 500, 600);
+
+    if (keyIsPressed) {
+      b = 4;
+      v = 0;
+      image(images[b], width / 2, height / 2, width, height);
+    }
+  }
+
+  if (b == 4) {
+    textSize(35);
+    fill(255, 0, 0);
+    text("Paper to find: 4", 40, 40);
+
+    image(paper, f[0]+paper.width/2, j[0]+paper.height/2);
+    image(paper, f[1]+paper.width/2, j[1]+paper.height/2);
+    image(paper, f[2]+paper.width/2, j[2]+paper.height/2);
+    image(paper, f[3]+paper.width/2, j[3]+paper.height/2);
+
+    if (mouseIsPressed) {
+      if (
+        mouseX > f[0] &&
+        mouseX < f[0] + 30 &&
+        mouseY > j[0] &&
+        mouseY < j[0] + 37
+      ) {
+        k = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > f[1] &&
+        mouseX < f[1] + 30 &&
+        mouseY > j[1] &&
+        mouseY < j[1] + 37
+      ) {
+        l = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > f[2] &&
+        mouseX < f[2] + 30 &&
+        mouseY > j[2] &&
+        mouseY < j[2] + 37
+      ) {
+        m = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > f[3] &&
+        mouseX < f[3] + 30 &&
+        mouseY > j[3] &&
+        mouseY < j[3] + 37
+      ) {
+        q = 3;
+      }
+    }
+
+    if (k > 0) {
+      textSize(20);
+      fill(255, 0, 0);
+      text("Paper found", 750, 40);
+    }
+    if (l > 0) {
+      textSize(20);
+      text("Paper found", 750, 70);
+    }
+    if (m > 0) {
+      textSize(20);
+      text("Paper found", 750, 100);
+    }
+    if (q > 0) {
+      textSize(20);
+      text("Paper found", 750, 130);
+    }
+    if (k > 0 && l > 0 && m > 0 && q > 0) {
+      v = 6;
+      b = -2;
+      k = 0;
+      l = 0;
+      m = 0;
+      q = 0;
+    }
+  }
+
+  if (v == 6) {
+    image(img[4], width / 2, height / 2, width, height);
+    textSize(35);
+    fill(0, 0, 0);
+    text("Press Any Key To Continue", 500, 600);
+
+    if (keyIsPressed) {
+      b = 5;
+      v = 0;
+      image(images[b], width / 2, height / 2, width, height);
+    }
+  }
+
+  if (b == 5) {
+    textSize(35);
+    fill(255, 0, 0);
+    text("Rubbish to find: 4", 40, 40);
+
+    image(rubbish, p[0]+rubbish.width/2, o[0]+rubbish.height/2);
+    image(rubbish, p[1]+rubbish.width/2, o[1]+rubbish.height/2);
+    image(rubbish, p[2]+rubbish.width/2, o[2]+rubbish.height/2);
+    image(rubbish, p[3]+rubbish.width/2, o[3]+rubbish.height/2);
+
+    if (mouseIsPressed) {
+      if (
+        mouseX > p[0] &&
+        mouseX < p[0] + 70 &&
+        mouseY > o[0] &&
+        mouseY < o[0] + 110
+      ) {
+        k = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > p[1] &&
+        mouseX < p[1] + 70 &&
+        mouseY > o[1] &&
+        mouseY < o[1] + 110
+      ) {
+        l = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > p[2] &&
+        mouseX < p[2] + 70 &&
+        mouseY > o[2] &&
+        mouseY < o[2] + 110
+      ) {
+        m = 3;
+      }
+    }
+    if (mouseIsPressed) {
+      if (
+        mouseX > p[3] &&
+        mouseX < p[3] + 70 &&
+        mouseY > o[3] &&
+        mouseY < o[3] + 110
+      ) {
+        q = 3;
+      }
+    }
+
+    if (k > 0) {
+      textSize(20);
+      fill(255, 0, 0);
+      text("Rubbish found", 750, 40);
+    }
+    if (l > 0) {
+      textSize(20);
+      text("Rubbish found", 750, 70);
+    }
+    if (m > 0) {
+      textSize(20);
+      text("Rubbish found", 750, 100);
+    }
+    if (q > 0) {
+      textSize(20);
+      text("Rubbish found", 750, 130);
+    }
+    if (k > 0 && l > 0 && m > 0 && q > 0) {
+      v = 7;
+      b = -2;
+      k = 0;
+      l = 0;
+      m = 0;
+      q = 0;
+    }
+  }
+
+  if (v == 7) {
+    image(img[5], width / 2, height / 2, width, height); // thanks the user and concludes the game with a final fact
+    textSize(35);
+    fill(0, 0, 0);
+    text("Thanks For Playing!!", 500, 500);
+    fill(255, 0, 0);
+    text("Press Any Key To Exit", 500, 600);
+
+    if (keyIsPressed) {
+      exit();
+    }
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+
+/*
+REFERENCES
+
+Image references:
+Vecteezy.com
+amazon.com
+Freepik.com
+creativemarket.com
+
+Item references:
+Alamy.com
+Kingpng.com
+
+Fact references:
+Circularecology.com
+*/
+
+
+
+        </script>
+    </body>
+</html>
